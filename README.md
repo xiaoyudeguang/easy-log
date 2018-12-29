@@ -11,7 +11,7 @@ private static LogUtil logger = LoggerManager.getLogger(Demo.class);
 ```
 ##### 使用LogUtil对象
 ```
-logger.info("这是一条日志！");   //支持输出List，Map，多个Object
+logger.info("这是一条日志！");   //支持输出List，Map，Object数组
 ```
 ##### Maven引用
 ```
