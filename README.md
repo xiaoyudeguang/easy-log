@@ -42,4 +42,17 @@ public class DBLogHandler extends AbstractBrancher{
 }
 ```
 大致意思你也应该能猜出来了，doService()方法是真正的接收并处理日志的方法，需要使用者自己实现。而doFilter()方法是过滤条件，也就是DBLogHandler类能接收并处理什么样的数据。你可以定义多个日志处理类，都用上述的doFilter()方法即可，注意@Brancher注解的key不能一样。
-（此处用到了easy-brancher，项目地址：https://gitee.com/xiaoyudeguang/easy-brancher）
+（此处用到了easy-brancher，项目地址：https://gitee.com/xiaoyudeguang/easy-brancher）。
+
+## 日志处理器模板
+
+这是一波福利。你可以把下面这个类赋值到你的系统，，然后让你的日志处理器类继承它就可以了。这样，就不用再每个日志处理器类里都写一遍doFilter()方法了。
+```
+public abstract class AbstractLogHandler extends AbstractBrancher{
+
+	@Override
+	public boolean doFilter(String key, EasyMap params) {
+		return super.doFilter(key, params)&&params.have(LoggerManager.KEY);
+	}
+}
+```
