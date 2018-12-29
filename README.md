@@ -25,7 +25,7 @@ logger.info("这是一条日志！");   //支持输出List，Map，Object数组
 ## 日志处理器
 那么问题来了，日期采集器的采集能力体现在哪呢？采集的日志又去哪了？别急，我们定义这样一个类：
 ```
-@Brancher(key = "db_log_handler", todo = { "数据库日志采集器" })
+@Brancher(key = "db_log_handler", todo = { "数据库日志处理器" })
 public class DBLogHandler extends AbstractBrancher{
 
 	@Override
@@ -41,4 +41,5 @@ public class DBLogHandler extends AbstractBrancher{
 	}
 }
 ```
-大致意思你也应该能猜出来了，doService()方法是真正的接收并处理日志的方法，需要使用者自己实现。而doFilter()方法是过滤条件，也就是DBLogHandler类能接收并处理什么样的数据（此处用到了easy-brancher，项目地址：https://gitee.com/xiaoyudeguang/easy-brancher）。
+大致意思你也应该能猜出来了，doService()方法是真正的接收并处理日志的方法，需要使用者自己实现。而doFilter()方法是过滤条件，也就是DBLogHandler类能接收并处理什么样的数据。你可以定义多个日志处理类，都用上述的doFilter()方法即可，注意@Brancher注解的key不能一样。
+（此处用到了easy-brancher，项目地址：https://gitee.com/xiaoyudeguang/easy-brancher）
