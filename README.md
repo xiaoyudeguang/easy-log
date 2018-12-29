@@ -12,7 +12,7 @@ private static LogUtil logger = LoggerManager.getLogger(Demo.class);
 ```
 logger.info("这是一条日志！");   //支持输出List，Map，Object数组
 ```
-## Maven引用
+## Maven引用(如果版本有变化，请自行去maven中央仓库引用)
 ```
 <dependency>
     <groupId>io.github.xiaoyudeguang</groupId>
@@ -45,7 +45,7 @@ public class DBLogHandler extends AbstractBrancher{
 
 ## 日志处理器模板
 
-这是一波福利。你可以把下面这个类赋值到你的系统，，然后让你的日志处理器类继承它就可以了。这样，就不用再每个日志处理器类里都写一遍doFilter()方法了。
+这是一波福利。你可以把下面这个类复制到你的系统，，然后让你的日志处理器类继承它就可以了。这样，就不用再每个日志处理器类里都写一遍doFilter()方法了。
 ```
 public abstract class AbstractLogHandler extends AbstractBrancher{
 
