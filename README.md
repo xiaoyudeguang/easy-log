@@ -1,10 +1,10 @@
 # easy-log
 
-#### 介绍
+## 介绍
 一个便捷的业务分支构件模块。当你的业务需要同时支持A和B两种方式时，你可能用一个if..else...就解决了。但是当你需要同时支持持A、B、C、D..中业务时，难道你不觉得用if..else...来搞分支太辛苦了吗？而且，代码会变得又臭又长。这时候，你需要这样一个工具来简化你的业务。
 
 
-#### 使用说明
+## 使用说明
 ##### 引入LogUtil对象
 ```
 private static LogUtil logger = LoggerManager.getLogger(Demo.class);
@@ -13,7 +13,7 @@ private static LogUtil logger = LoggerManager.getLogger(Demo.class);
 ```
 logger.info("这是一条日志！");   //支持输出List，Map，Object数组
 ```
-##### Maven引用
+## Maven引用
 ```
 <dependency>
     <groupId>io.github.xiaoyudeguang</groupId>
@@ -22,7 +22,8 @@ logger.info("这是一条日志！");   //支持输出List，Map，Object数组
 </dependency>
 ```
 
-##### 那么问题来了，日期采集器的采集能力体现在哪呢？采集的日志又去哪了？别急，我们定义这样一个类：
+## 日志处理器
+那么问题来了，日期采集器的采集能力体现在哪呢？采集的日志又去哪了？别急，我们定义这样一个类：
 ```
 @Brancher(key = "db_log_handler", todo = { "数据库日志采集器" })
 public class DBLogHandler extends AbstractBrancher{
