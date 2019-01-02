@@ -17,41 +17,26 @@ logger.info("这是一条日志！");   //支持输出List，Map，Object数组
 <dependency>
     <groupId>io.github.xiaoyudeguang</groupId>
     <artifactId>easy-log</artifactId>
-    <version>3.0.0-RELEASE</version>
+    <version>3.0.2-RELEASE</version>
 </dependency>
 ```
 
 ## 日志处理器
-那么问题来了，日期采集器的采集能力体现在哪呢？采集的日志又去哪了？别急，我们定义这样一个类：
+那么问题来了，日志采集器的采集能力体现在哪呢？采集的日志又去哪了？别急，我们定义这样一个(或多个)类（此处用到了easy-brancher，项目地址：https://gitee.com/xiaoyudeguang/easy-brancher）：
 ```
-@Brancher(key = "db_log_handler", todo = { "数据库日志处理器" })
-public class DBLogHandler extends AbstractBrancher{
-
+@Brancher(key = "db_log_handler", todo = { "数据库日志处理器" }, args = {LogConfig.KEY})
+public class DBLogHandler extends AbstractLogBrancher{
+	
 	@Override
-	public Object doService(EasyMap params) {
-		List<LogInfo> infos = params.get(LoggerManager.KEY);
-		System.out.println(infos);
-		return null;
+	public Object doService(List<LogInfo> infos) {
+		Console.log("日志", infos);
+		return "我最棒！";
 	}
 
 	@Override
-	public boolean doFilter(String key, EasyMap params) {
-		return super.doFilter(key, params)&&params.have(LoggerManager.KEY);
-	}
-}
-```
-大致意思你也应该能猜出来了，doService()方法是真正的接收并处理日志的方法，需要使用者自己实现。而doFilter()方法是过滤条件，也就是DBLogHandler类能接收并处理什么样的数据。你可以定义多个日志处理类，都用上述的doFilter()方法即可，注意@Brancher注解的key不能一样。
-（此处用到了easy-brancher，项目地址：https://gitee.com/xiaoyudeguang/easy-brancher）。
-
-## 日志处理器模板
-
-这是一波福利。你可以把下面这个类复制到你的系统，，然后让你的日志处理器类继承它就可以了。这样，就不用再每个日志处理器类里都写一遍doFilter()方法了。
-```
-public abstract class AbstractLogHandler extends AbstractBrancher{
-
-	@Override
-	public boolean doFilter(String key, EasyMap params) {
-		return super.doFilter(key, params)&&params.have(LoggerManager.KEY);
+	public void addLogConfig(EasyList keys) {
+		keys.add("db_log_handler");
 	}
 }
 ```
+> 自定义的日志处理器需要继承easy-log提供的AbstractLogBrancher抽象类。需要实现两个方法：doService()方法是真正的接收并处理日志的方法；addLogConfig()方法中将自定义的日志处理器中的@Brancher注解中的key参数注册到easy-log中，这样就可以在doService()方法接收日志信息了。
